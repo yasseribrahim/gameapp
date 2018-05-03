@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">GameApp</string>
+
+    <string name="menu_action_level_easy">Easy</string>
+    <string name="menu_action_level_medium">Medium</string>
+    <string name="menu_action_level_hard">Hard</string>
+</resources>
