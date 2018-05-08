@@ -5,6 +5,5 @@ package com.leaflet.gameapp.domain.utils;
  */
 
 public interface ConstantsIds {
-    String ROWS_COUNT_ID = "ROWS_COUNT_ID";
-    String COLUMNS_COUNT_ID = "COLUMNS_COUNT_ID";
+    String LEVEL_ID = "LEVEL_ID";
 }

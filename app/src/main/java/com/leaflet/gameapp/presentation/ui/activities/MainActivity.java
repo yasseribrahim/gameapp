@@ -13,8 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.leaflet.gameapp.R;
-import com.leaflet.gameapp.domain.listeners.OnDimensionChanged;
-import com.leaflet.gameapp.domain.models.Dimension;
+import com.leaflet.gameapp.domain.models.Level;
 import com.leaflet.gameapp.presentation.ui.fragments.PlayFragment;
 
 import butterknife.BindView;
@@ -24,8 +23,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     @BindView(R.id.navigationView)
     BottomNavigationView navigationView;
 
-    private OnDimensionChanged onDimensionChanged;
-    private Dimension dimension;
+    private Level level;
     private MenuItem currentLevel;
 
     @Override
@@ -34,8 +32,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         navigationView.setOnNavigationItemSelectedListener(this);
-        dimension = Dimension.DIMENSION_2_BY_3;
-        addPlayFragment();
+        level = Level.LEVEL_EASY;
+        changePlayFragment();
     }
 
     @Override
@@ -55,41 +53,40 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_item_level_easy:
-                applyDimension(Dimension.DIMENSION_2_BY_3);
+                applyLevel(Level.LEVEL_EASY);
                 break;
             case R.id.menu_item_level_medium:
-                applyDimension(Dimension.DIMENSION_3_BY_4);
+                applyLevel(Level.LEVEL_MEDIUM);
                 break;
             case R.id.menu_item_level_hard:
-                applyDimension(Dimension.DIMENSION_4_BY_5);
+                applyLevel(Level.LEVEL_HARD);
                 break;
 
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void applyDimension(Dimension dimension) {
-        this.dimension = dimension;
-        switch (dimension) {
-            case DIMENSION_2_BY_3:
+    private void applyLevel(Level level) {
+        this.level = level;
+        switch (level) {
+            case LEVEL_EASY:
                 currentLevel.setTitle(R.string.menu_action_level_easy);
                 break;
-            case DIMENSION_3_BY_4:
+            case LEVEL_MEDIUM:
                 currentLevel.setTitle(R.string.menu_action_level_medium);
                 break;
-            case DIMENSION_4_BY_5:
+            case LEVEL_HARD:
                 currentLevel.setTitle(R.string.menu_action_level_hard);
                 break;
-
         }
-        onDimensionChanged.onDimensionChanges(dimension.getDimensionX(), dimension.getDimensionY());
+        changePlayFragment();
     }
 
-    private void addPlayFragment() {
+    private void changePlayFragment() {
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
 
-        Fragment fragment = PlayFragment.newInstance(dimension.getDimensionX(), dimension.getDimensionY());
+        Fragment fragment = PlayFragment.newInstance(level.getId());
         transaction.replace(R.id.container, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
@@ -109,10 +106,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 break;
         }
         return false;
-    }
-
-    public void setOnDimensionChanged(OnDimensionChanged onDimensionChanged) {
-        this.onDimensionChanged = onDimensionChanged;
     }
 
     @Override
