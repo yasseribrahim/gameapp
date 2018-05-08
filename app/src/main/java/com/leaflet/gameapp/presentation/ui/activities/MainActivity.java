@@ -2,6 +2,7 @@ package com.leaflet.gameapp.presentation.ui.activities;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -11,20 +12,35 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.leaflet.gameapp.R;
+import com.leaflet.gameapp.domain.communicator.OnScoreChange;
 import com.leaflet.gameapp.domain.models.Level;
 import com.leaflet.gameapp.presentation.ui.fragments.PlayFragment;
 
+import at.grabner.circleprogress.CircleProgressView;
+import at.grabner.circleprogress.TextMode;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, PlayFragment.OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, PlayFragment.OnFragmentInteractionListener, OnScoreChange {
     @BindView(R.id.navigationView)
     BottomNavigationView navigationView;
 
+    @BindView(R.id.circle_view)
+    CircleProgressView circleProgressView;
+
+    @BindView(R.id.score)
+    TextView scoreView;
+
+    @BindView(R.id.timer)
+    TextView timerView;
+
+    private CountDownTimer timer;
     private Level level;
     private MenuItem currentLevel;
+    private int score;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +49,25 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         ButterKnife.bind(this);
         navigationView.setOnNavigationItemSelectedListener(this);
         level = Level.LEVEL_EASY;
+
+        circleProgressView.setUnitVisible(false);
+        circleProgressView.setTextMode(TextMode.VALUE);
+        circleProgressView.setMaxValue(30);
+
+        score = 0;
+
+        timer = new CountDownTimer(2 * 60 * 1000, 1000) {
+            @Override
+            public void onTick(long l) {
+                timerView.setText(l + "");
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        };
+
         changePlayFragment();
     }
 
@@ -47,6 +82,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     public boolean onPrepareOptionsMenu(Menu menu) {
         currentLevel = menu.findItem(R.id.menu_item_level_selected);
         return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    protected void onDestroy() {
+        timer.cancel();
+        super.onDestroy();
     }
 
     @Override
@@ -90,6 +131,17 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         transaction.replace(R.id.container, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
+
+        clearIndicatorBar();
+    }
+
+    private void clearIndicatorBar() {
+        scoreView.setText("Score: 0");
+        timerView.setText("00:00");
+        timer.cancel();
+        timer.start();
+        circleProgressView.setValue(0);
+        circleProgressView.setValueAnimated(60, 60000);
     }
 
     @Override
@@ -111,5 +163,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+
+    @Override
+    public void onScoreChange() {
+        scoreView.setText("Score: " + (++score));
     }
 }
