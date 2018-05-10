@@ -24,6 +24,7 @@ public class ItemsClickedManager implements Clickable {
     private final Handler handler;
     private final int defaultResource;
     private OnScoreChange onScoreChange;
+    private boolean isClicksAvailable;
 
     public ItemsClickedManager(Context context, Level level, OnScoreChange onScoreChange) {
         this.context = context;
@@ -32,6 +33,7 @@ public class ItemsClickedManager implements Clickable {
         this.defaultResource = R.drawable.ic_question_mark;
         this.handler = new Handler();
         this.onScoreChange = onScoreChange;
+        isClicksAvailable = true;
     }
 
     public final void setLevel(Level level) {
@@ -48,22 +50,26 @@ public class ItemsClickedManager implements Clickable {
         final Node node = nodes[row - 1][column - 1];
         node.setImage(image);
 
-        if (!node.isVisible()) {
+        if (!node.isVisible() && isClicksAvailable) {
             changeView(node, false);
 
             if (previousNode.isCleared()) {
                 previousNode.fill(node);
                 previousNode.setImage(image);
+                isClicksAvailable = true;
             } else if (previousNode.equals(node)) {
                 onScoreChange.onScoreChange();
                 previousNode.clear();
+                isClicksAvailable = true;
             } else {
+                isClicksAvailable = false;
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         changeView(nodes[previousNode.getRow()][previousNode.getColumn()], true);
                         changeView(node, true);
                         previousNode.clear();
+                        isClicksAvailable = true;
                     }
                 }, 1000);
             }

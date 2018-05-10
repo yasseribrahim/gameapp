@@ -56,17 +56,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         score = 0;
 
-        timer = new CountDownTimer(2 * 60 * 1000, 1000) {
-            @Override
-            public void onTick(long l) {
-                timerView.setText(l + "");
-            }
-
-            @Override
-            public void onFinish() {
-
-            }
-        };
+        timer = new CustomCountDownTimer(2 * 60 * 1000, 1000);
 
         changePlayFragment();
     }
@@ -168,5 +158,38 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     @Override
     public void onScoreChange() {
         scoreView.setText("Score: " + (++score));
+    }
+
+    public class CustomCountDownTimer extends CountDownTimer {
+        private int counter;
+
+        public CustomCountDownTimer(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+            counter = 0;
+        }
+
+        @Override
+        public void onTick(long l) {
+            counter++;
+
+            int seconds = counter % 60;
+            int minutes = counter / 60;
+
+            String secondsAsString = seconds + "";
+            String minutesAsString = minutes + "";
+
+            if (seconds <= 9) {
+                secondsAsString = "0" + seconds;
+            }
+            if (minutes <= 9) {
+                minutesAsString = "0" + minutes;
+            }
+            timerView.setText(minutesAsString + ":" + secondsAsString);
+        }
+
+        @Override
+        public void onFinish() {
+
+        }
     }
 }
