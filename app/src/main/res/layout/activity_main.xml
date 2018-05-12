@@ -9,7 +9,10 @@
         android:id="@+id/indicator_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true">
+        android:layout_alignParentTop="true"
+        android:background="@color/colorPrimary"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp">
 
         <TextView
             android:id="@+id/score"
@@ -17,39 +20,26 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
+            android:textColor="@color/white"
             android:text="Score: 0"/>
 
         <TextView
             android:id="@+id/timer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/white"
             android:layout_centerInParent="true"
             android:text="00:00"/>
 
-        <at.grabner.circleprogress.CircleProgressView
-            android:id="@+id/circle_view"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="100dp"
+            android:layout_height="15dp"
+            style="?android:attr/progressBarStyleHorizontal"
             android:layout_alignParentEnd="true"
-            android:layout_margin="2dp"
-            app:cpv_autoTextSize="true"
-            app:cpv_barColor="@color/colorPrimary"
-            app:cpv_barWidth="5dp"
-            app:cpv_innerContourSize="0dp"
-            app:cpv_maxValue="30"
-            app:cpv_outerContourSize="0dp"
-            app:cpv_rimColor="@color/colorAccent"
-            app:cpv_rimWidth="5dp"
-            app:cpv_seekMode="true"
-            app:cpv_showUnit="true"
-            app:cpv_spinColor="@color/colorPrimary"
-            app:cpv_textColor="@color/colorPrimaryDark"
-            app:cpv_textScale="1"
-            app:cpv_unit=""
-            app:cpv_unitColor="@color/colorAccent"
-            app:cpv_unitPosition="bottom"
-            app:cpv_unitScale="10"
-            app:cpv_value="0" />
+            android:layout_centerVertical="true"
+            android:max="60"
+            android:progress="0"/>
     </RelativeLayout>
 
     <FrameLayout

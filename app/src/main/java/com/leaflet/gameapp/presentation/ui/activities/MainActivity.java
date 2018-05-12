@@ -1,6 +1,7 @@
 package com.leaflet.gameapp.presentation.ui.activities;
 
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
@@ -12,15 +13,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.WindowManager;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.leaflet.gameapp.R;
+import com.leaflet.gameapp.domain.communicator.CountDownTimerCallback;
 import com.leaflet.gameapp.domain.communicator.OnScoreChange;
 import com.leaflet.gameapp.domain.models.Level;
 import com.leaflet.gameapp.presentation.ui.fragments.PlayFragment;
 
-import at.grabner.circleprogress.CircleProgressView;
-import at.grabner.circleprogress.TextMode;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -28,16 +30,16 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     @BindView(R.id.navigationView)
     BottomNavigationView navigationView;
 
-    @BindView(R.id.circle_view)
-    CircleProgressView circleProgressView;
-
     @BindView(R.id.score)
     TextView scoreView;
 
     @BindView(R.id.timer)
     TextView timerView;
 
-    private CountDownTimer timer;
+    @BindView(R.id.progress)
+    ProgressBar progress;
+
+    private CustomCountDownTimer timer, hintTimer;
     private Level level;
     private MenuItem currentLevel;
     private int score;
@@ -45,18 +47,43 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         navigationView.setOnNavigationItemSelectedListener(this);
-        level = Level.LEVEL_EASY;
-
-        circleProgressView.setUnitVisible(false);
-        circleProgressView.setTextMode(TextMode.VALUE);
-        circleProgressView.setMaxValue(30);
+        level = Level.LEVEL_MEDIUM;
 
         score = 0;
 
-        timer = new CustomCountDownTimer(2 * 60 * 1000, 1000);
+        timer = new CustomCountDownTimer(2 * 60 * 1000, 1000, new CountDownTimerCallback() {
+            @Override
+            public void onTickCallback() {
+                int seconds = timer.getCounter() % 60;
+                int minutes = timer.getCounter() / 60;
+
+                String secondsAsString = seconds + "";
+                String minutesAsString = minutes + "";
+
+                if (seconds <= 9) {
+                    secondsAsString = "0" + seconds;
+                }
+                if (minutes <= 9) {
+                    minutesAsString = "0" + minutes;
+                }
+                timerView.setText(minutesAsString + ":" + secondsAsString);
+            }
+        });
+
+        hintTimer = new CustomCountDownTimer(60 * 1000, 1000, new CountDownTimerCallback() {
+            @Override
+            public void onTickCallback() {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    progress.setProgress(hintTimer.getCounter(), true);
+                } else {
+                    progress.setProgress(hintTimer.getCounter());
+                }
+            }
+        });
 
         changePlayFragment();
     }
@@ -130,8 +157,17 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         timerView.setText("00:00");
         timer.cancel();
         timer.start();
-        circleProgressView.setValue(0);
-        circleProgressView.setValueAnimated(60, 60000);
+        hintTimer.start();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
     }
 
     @Override
@@ -162,29 +198,22 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     public class CustomCountDownTimer extends CountDownTimer {
         private int counter;
+        private CountDownTimerCallback callback;
 
-        public CustomCountDownTimer(long millisInFuture, long countDownInterval) {
+        public CustomCountDownTimer(long millisInFuture, long countDownInterval, CountDownTimerCallback callback) {
             super(millisInFuture, countDownInterval);
-            counter = 0;
+            this.counter = 0;
+            this.callback = callback;
+        }
+
+        public int getCounter() {
+            return counter;
         }
 
         @Override
         public void onTick(long l) {
             counter++;
-
-            int seconds = counter % 60;
-            int minutes = counter / 60;
-
-            String secondsAsString = seconds + "";
-            String minutesAsString = minutes + "";
-
-            if (seconds <= 9) {
-                secondsAsString = "0" + seconds;
-            }
-            if (minutes <= 9) {
-                minutesAsString = "0" + minutes;
-            }
-            timerView.setText(minutesAsString + ":" + secondsAsString);
+            callback.onTickCallback();
         }
 
         @Override

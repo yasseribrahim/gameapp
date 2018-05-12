@@ -4,4 +4,6 @@
     <string name="menu_action_level_easy">Easy</string>
     <string name="menu_action_level_medium">Medium</string>
     <string name="menu_action_level_hard">Hard</string>
+
+    <string name="dialog_msg_loading">Loading...</string>
 </resources>

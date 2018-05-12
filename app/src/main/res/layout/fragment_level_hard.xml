@@ -10,45 +10,71 @@
         android:layout_weight="1"
         android:orientation="horizontal">
 
-        <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/item_1_1"
+        <FrameLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_centerInParent="true"
             android:layout_weight="1"
-            android:background="?attr/selectableItemBackground"
-            android:padding="10dp"
-            android:src="@drawable/ic_question_mark" />
+            android:background="@drawable/borders">
 
-        <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/item_1_2"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            android:layout_weight="1"
-            android:background="?attr/selectableItemBackground"
-            android:padding="10dp"
-            android:src="@drawable/ic_question_mark" />
+            <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/item_1_1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:background="?attr/selectableItemBackground"
+                android:padding="10dp"
+                android:src="@drawable/ic_question_mark" />
 
-        <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/item_1_3"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            android:layout_weight="1"
-            android:background="?attr/selectableItemBackground"
-            android:padding="10dp"
-            android:src="@drawable/ic_question_mark" />
+        </FrameLayout>
 
-        <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/item_1_4"
+        <FrameLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_centerInParent="true"
             android:layout_weight="1"
-            android:background="?attr/selectableItemBackground"
-            android:padding="10dp"
-            android:src="@drawable/ic_question_mark" />
+            android:background="@drawable/borders">
+
+            <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/item_1_2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:background="?attr/selectableItemBackground"
+                android:padding="10dp"
+                android:src="@drawable/ic_question_mark" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/borders">
+
+            <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/item_1_3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:background="?attr/selectableItemBackground"
+                android:padding="10dp"
+                android:src="@drawable/ic_question_mark" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/borders">
+
+            <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/item_1_4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:background="?attr/selectableItemBackground"
+                android:padding="10dp"
+                android:src="@drawable/ic_question_mark" />
+        </FrameLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -57,45 +83,69 @@
         android:layout_weight="1"
         android:orientation="horizontal">
 
-        <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/item_2_1"
+        <FrameLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_centerInParent="true"
             android:layout_weight="1"
-            android:background="?attr/selectableItemBackground"
-            android:padding="10dp"
-            android:src="@drawable/ic_question_mark" />
+            android:background="@drawable/borders">
 
-        <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/item_2_2"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            android:layout_weight="1"
-            android:background="?attr/selectableItemBackground"
-            android:padding="10dp"
-            android:src="@drawable/ic_question_mark" />
+            <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/item_2_1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:background="?attr/selectableItemBackground"
+                android:padding="10dp"
+                android:src="@drawable/ic_question_mark" />
+        </FrameLayout>
 
-        <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/item_2_3"
+        <FrameLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_centerInParent="true"
             android:layout_weight="1"
-            android:background="?attr/selectableItemBackground"
-            android:padding="10dp"
-            android:src="@drawable/ic_question_mark" />
+            android:background="@drawable/borders">
 
-        <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/item_2_4"
+            <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/item_2_2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:background="?attr/selectableItemBackground"
+                android:padding="10dp"
+                android:src="@drawable/ic_question_mark" />
+        </FrameLayout>
+
+        <FrameLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_centerInParent="true"
             android:layout_weight="1"
-            android:background="?attr/selectableItemBackground"
-            android:padding="10dp"
-            android:src="@drawable/ic_question_mark" />
+            android:background="@drawable/borders">
+
+            <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/item_2_3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:background="?attr/selectableItemBackground"
+                android:padding="10dp"
+                android:src="@drawable/ic_question_mark" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/borders">
+
+            <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/item_2_4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:background="?attr/selectableItemBackground"
+                android:padding="10dp"
+                android:src="@drawable/ic_question_mark" />
+        </FrameLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -104,45 +154,69 @@
         android:layout_weight="1"
         android:orientation="horizontal">
 
-        <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/item_3_1"
+        <FrameLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_centerInParent="true"
             android:layout_weight="1"
-            android:background="?attr/selectableItemBackground"
-            android:padding="10dp"
-            android:src="@drawable/ic_question_mark" />
+            android:background="@drawable/borders">
 
-        <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/item_3_2"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            android:layout_weight="1"
-            android:background="?attr/selectableItemBackground"
-            android:padding="10dp"
-            android:src="@drawable/ic_question_mark" />
+            <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/item_3_1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:background="?attr/selectableItemBackground"
+                android:padding="10dp"
+                android:src="@drawable/ic_question_mark" />
+        </FrameLayout>
 
-        <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/item_3_3"
+        <FrameLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_centerInParent="true"
             android:layout_weight="1"
-            android:background="?attr/selectableItemBackground"
-            android:padding="10dp"
-            android:src="@drawable/ic_question_mark" />
+            android:background="@drawable/borders">
 
-        <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/item_3_4"
+            <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/item_3_2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:background="?attr/selectableItemBackground"
+                android:padding="10dp"
+                android:src="@drawable/ic_question_mark" />
+        </FrameLayout>
+
+        <FrameLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_centerInParent="true"
             android:layout_weight="1"
-            android:background="?attr/selectableItemBackground"
-            android:padding="10dp"
-            android:src="@drawable/ic_question_mark" />
+            android:background="@drawable/borders">
+
+            <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/item_3_3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:background="?attr/selectableItemBackground"
+                android:padding="10dp"
+                android:src="@drawable/ic_question_mark" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/borders">
+
+            <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/item_3_4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:background="?attr/selectableItemBackground"
+                android:padding="10dp"
+                android:src="@drawable/ic_question_mark" />
+        </FrameLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -151,45 +225,69 @@
         android:layout_weight="1"
         android:orientation="horizontal">
 
-        <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/item_4_1"
+        <FrameLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_centerInParent="true"
             android:layout_weight="1"
-            android:background="?attr/selectableItemBackground"
-            android:padding="10dp"
-            android:src="@drawable/ic_question_mark" />
+            android:background="@drawable/borders">
 
-        <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/item_4_2"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            android:layout_weight="1"
-            android:background="?attr/selectableItemBackground"
-            android:padding="10dp"
-            android:src="@drawable/ic_question_mark" />
+            <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/item_4_1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:background="?attr/selectableItemBackground"
+                android:padding="10dp"
+                android:src="@drawable/ic_question_mark" />
+        </FrameLayout>
 
-        <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/item_4_3"
+        <FrameLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_centerInParent="true"
             android:layout_weight="1"
-            android:background="?attr/selectableItemBackground"
-            android:padding="10dp"
-            android:src="@drawable/ic_question_mark" />
+            android:background="@drawable/borders">
 
-        <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/item_4_4"
+            <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/item_4_2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:background="?attr/selectableItemBackground"
+                android:padding="10dp"
+                android:src="@drawable/ic_question_mark" />
+        </FrameLayout>
+
+        <FrameLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_centerInParent="true"
             android:layout_weight="1"
-            android:background="?attr/selectableItemBackground"
-            android:padding="10dp"
-            android:src="@drawable/ic_question_mark" />
+            android:background="@drawable/borders">
+
+            <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/item_4_3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:background="?attr/selectableItemBackground"
+                android:padding="10dp"
+                android:src="@drawable/ic_question_mark" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/borders">
+
+            <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/item_4_4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:background="?attr/selectableItemBackground"
+                android:padding="10dp"
+                android:src="@drawable/ic_question_mark" />
+        </FrameLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -198,44 +296,68 @@
         android:layout_weight="1"
         android:orientation="horizontal">
 
-        <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/item_5_1"
+        <FrameLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_centerInParent="true"
             android:layout_weight="1"
-            android:background="?attr/selectableItemBackground"
-            android:padding="10dp"
-            android:src="@drawable/ic_question_mark" />
+            android:background="@drawable/borders">
 
-        <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/item_5_2"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            android:layout_weight="1"
-            android:background="?attr/selectableItemBackground"
-            android:padding="10dp"
-            android:src="@drawable/ic_question_mark" />
+            <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/item_5_1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:background="?attr/selectableItemBackground"
+                android:padding="10dp"
+                android:src="@drawable/ic_question_mark" />
+        </FrameLayout>
 
-        <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/item_5_3"
+        <FrameLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_centerInParent="true"
             android:layout_weight="1"
-            android:background="?attr/selectableItemBackground"
-            android:padding="10dp"
-            android:src="@drawable/ic_question_mark" />
+            android:background="@drawable/borders">
 
-        <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/item_5_4"
+            <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/item_5_2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:background="?attr/selectableItemBackground"
+                android:padding="10dp"
+                android:src="@drawable/ic_question_mark" />
+        </FrameLayout>
+
+        <FrameLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_centerInParent="true"
             android:layout_weight="1"
-            android:background="?attr/selectableItemBackground"
-            android:padding="10dp"
-            android:src="@drawable/ic_question_mark" />
+            android:background="@drawable/borders">
+
+            <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/item_5_3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:background="?attr/selectableItemBackground"
+                android:padding="10dp"
+                android:src="@drawable/ic_question_mark" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/borders">
+
+            <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/item_5_4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:background="?attr/selectableItemBackground"
+                android:padding="10dp"
+                android:src="@drawable/ic_question_mark" />
+        </FrameLayout>
     </LinearLayout>
 </LinearLayout>

@@ -18,6 +18,8 @@ public class Node {
         this(-1, -1, -1, null);
     }
 
+    public Node(int row, int column) {this(row, column, -1, null);}
+
     public Node(int row, int column, int resource, ImageView image) {
         this.row = row;
         this.column = column;

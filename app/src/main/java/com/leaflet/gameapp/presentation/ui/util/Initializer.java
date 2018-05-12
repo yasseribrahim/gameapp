@@ -1,25 +1,33 @@
 package com.leaflet.gameapp.presentation.ui.util;
 
 import com.leaflet.gameapp.R;
+import com.leaflet.gameapp.domain.communicator.ResourceHandler;
+import com.leaflet.gameapp.domain.models.Level;
 import com.leaflet.gameapp.domain.models.Node;
+import com.leaflet.gameapp.domain.utils.GeneratorManager;
 
 /**
  * Created by yasser.ibrahim on 5/8/2018.
  */
 
-public class Initializer {
-    public static Node[][] generate(int rows, int columns) {
-        Node[][] nodes = new Node[rows][columns];
-        for (int row = 0; row < rows; row++) {
-            for (int column = 0; column < columns; column++) {
-                nodes[row][column] = new Node(row, column, getDrawable(rows, columns, row, column), null);
-            }
-        }
-        return nodes;
+public class Initializer implements ResourceHandler {
+    private static final Initializer INITIALIZER = new Initializer();
+    private final GeneratorManager manager;
+
+    private Initializer() {
+        this.manager = new GeneratorManager(this);
     }
 
-    public static int getDrawable(int rows, int columns, int row, int column) {
-        int index = ((rows * (row + 1)) - (columns - (column + 1)) - 1) % ((rows * columns) / 2);
+    public static Initializer getCurrentInitializer() {
+        return INITIALIZER;
+    }
+
+    public Node[][] generate(Level level) {
+        return manager.generate(level);
+    }
+
+    @Override
+    public int getDrawable(int index) {
         switch (index) {
             case 1:
                 return R.drawable.face_1;

@@ -38,7 +38,7 @@ public class ItemsClickedManager implements Clickable {
 
     public final void setLevel(Level level) {
         this.level = level;
-        this.nodes = Initializer.generate(level.getRows(), level.getColumns());
+        this.nodes = Initializer.getCurrentInitializer().generate(level);
     }
 
     public Level getLevel() {
