@@ -19,14 +19,16 @@ import android.widget.TextView;
 
 import com.leaflet.gameapp.R;
 import com.leaflet.gameapp.domain.communicator.CountDownTimerCallback;
+import com.leaflet.gameapp.domain.communicator.OnChangeLevelCallback;
 import com.leaflet.gameapp.domain.communicator.OnScoreChange;
 import com.leaflet.gameapp.domain.models.Level;
+import com.leaflet.gameapp.presentation.ui.fragments.ChangeLevelBottomSheetFragment;
 import com.leaflet.gameapp.presentation.ui.fragments.PlayFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, PlayFragment.OnFragmentInteractionListener, OnScoreChange {
+public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, PlayFragment.OnFragmentInteractionListener, OnScoreChange, OnChangeLevelCallback {
     @BindView(R.id.navigationView)
     BottomNavigationView navigationView;
 
@@ -128,13 +130,13 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         this.level = level;
         switch (level) {
             case LEVEL_EASY:
-                currentLevel.setTitle(R.string.menu_action_level_easy);
+                currentLevel.setTitle(R.string.action_level_easy);
                 break;
             case LEVEL_MEDIUM:
-                currentLevel.setTitle(R.string.menu_action_level_medium);
+                currentLevel.setTitle(R.string.action_level_medium);
                 break;
             case LEVEL_HARD:
-                currentLevel.setTitle(R.string.menu_action_level_hard);
+                currentLevel.setTitle(R.string.action_level_hard);
                 break;
         }
         changePlayFragment();
@@ -177,13 +179,27 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
                 break;
             case R.id.navigation_score:
-
+                changeLevel();
                 break;
             case R.id.navigation_exit:
 
                 break;
         }
         return false;
+    }
+
+    private void changeLevel() {
+        ChangeLevelBottomSheetFragment dialog = ChangeLevelBottomSheetFragment.newInstance(0);
+//        dialog.setOnShowListener(new DialogInterface().OnShowListener() {
+//            @Override
+//            public void onShow(DialogInterface dialog) {
+//                ChangeLevelBottomSheetFragment d = (ChangeLevelBottomSheetFragment) dialog;
+//                FrameLayout bottomSheet = (FrameLayout) d.findViewById(android.support.design.R.id.design_bottom_sheet);
+//                BottomSheetBehavior.from(bottomSheet).setPeekHeight(bottomSheet.getHeight());
+//            }
+//        });
+
+        dialog.show(getSupportFragmentManager(), "");
     }
 
     @Override
@@ -194,6 +210,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     @Override
     public void onScoreChange() {
         scoreView.setText("Score: " + (++score));
+    }
+
+    @Override
+    public void onChangeLevelCallback(Level level) {
+        this.level = level;
+        changePlayFragment();
     }
 
     public class CustomCountDownTimer extends CountDownTimer {
