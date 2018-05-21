@@ -38,7 +38,7 @@
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:max="60"
+            android:max="5"
             android:progress="0"/>
     </RelativeLayout>
 

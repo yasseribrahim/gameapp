@@ -20,15 +20,17 @@ import android.widget.TextView;
 import com.leaflet.gameapp.R;
 import com.leaflet.gameapp.domain.communicator.CountDownTimerCallback;
 import com.leaflet.gameapp.domain.communicator.OnChangeLevelCallback;
-import com.leaflet.gameapp.domain.communicator.OnScoreChange;
+import com.leaflet.gameapp.domain.communicator.OnScoreChanged;
+import com.leaflet.gameapp.domain.communicator.OnShowHint;
 import com.leaflet.gameapp.domain.models.Level;
+import com.leaflet.gameapp.domain.utils.ConstantsValues;
 import com.leaflet.gameapp.presentation.ui.fragments.ChangeLevelBottomSheetFragment;
 import com.leaflet.gameapp.presentation.ui.fragments.PlayFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, PlayFragment.OnFragmentInteractionListener, OnScoreChange, OnChangeLevelCallback {
+public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, PlayFragment.OnFragmentInteractionListener, OnScoreChanged, OnChangeLevelCallback {
     @BindView(R.id.navigationView)
     BottomNavigationView navigationView;
 
@@ -45,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private Level level;
     private MenuItem currentLevel;
     private int score;
+    private OnShowHint onShowHint;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,16 +77,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 }
                 timerView.setText(minutesAsString + ":" + secondsAsString);
             }
-        });
 
-        hintTimer = new CustomCountDownTimer(60 * 1000, 1000, new CountDownTimerCallback() {
             @Override
-            public void onTickCallback() {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    progress.setProgress(hintTimer.getCounter(), true);
-                } else {
-                    progress.setProgress(hintTimer.getCounter());
-                }
+            public void onFinish() {
+
             }
         });
 
@@ -106,6 +103,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     @Override
     protected void onDestroy() {
         timer.cancel();
+        hintTimer.cancel();
         super.onDestroy();
     }
 
@@ -126,6 +124,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         return super.onOptionsItemSelected(item);
     }
 
+    public void setOnShowHint(OnShowHint onShowHint) {
+        this.onShowHint = onShowHint;
+    }
+
     private void applyLevel(Level level) {
         this.level = level;
         switch (level) {
@@ -140,6 +142,31 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 break;
         }
         changePlayFragment();
+    }
+
+    private void resetHintTimer() {
+        if (hintTimer != null) {
+            hintTimer.cancel();
+        }
+
+        progress.setProgress(0);
+        hintTimer = new CustomCountDownTimer(ConstantsValues.HINT_TIME, 1000, new CountDownTimerCallback() {
+            @Override
+            public void onTickCallback() {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    progress.setProgress(hintTimer.getCounter(), true);
+                } else {
+                    progress.setProgress(hintTimer.getCounter());
+                }
+            }
+
+            @Override
+            public void onFinish() {
+                onShowHint.onShowHint();
+                resetHintTimer();
+            }
+        });
+        hintTimer.start();
     }
 
     private void changePlayFragment() {
@@ -159,7 +186,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         timerView.setText("00:00");
         timer.cancel();
         timer.start();
-        hintTimer.start();
+
+        resetHintTimer();
     }
 
     @Override
@@ -189,15 +217,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     private void changeLevel() {
-        ChangeLevelBottomSheetFragment dialog = ChangeLevelBottomSheetFragment.newInstance(0);
-//        dialog.setOnShowListener(new DialogInterface().OnShowListener() {
-//            @Override
-//            public void onShow(DialogInterface dialog) {
-//                ChangeLevelBottomSheetFragment d = (ChangeLevelBottomSheetFragment) dialog;
-//                FrameLayout bottomSheet = (FrameLayout) d.findViewById(android.support.design.R.id.design_bottom_sheet);
-//                BottomSheetBehavior.from(bottomSheet).setPeekHeight(bottomSheet.getHeight());
-//            }
-//        });
+        ChangeLevelBottomSheetFragment dialog = ChangeLevelBottomSheetFragment.newInstance(level.getId());
 
         dialog.show(getSupportFragmentManager(), "");
     }
@@ -240,7 +260,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         @Override
         public void onFinish() {
-
+            callback.onFinish();
         }
     }
 }

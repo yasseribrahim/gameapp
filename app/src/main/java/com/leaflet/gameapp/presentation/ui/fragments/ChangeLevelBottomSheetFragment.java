@@ -15,6 +15,7 @@ import com.leaflet.gameapp.domain.communicator.OnChangeLevelCallback;
 import com.leaflet.gameapp.domain.models.Level;
 import com.leaflet.gameapp.domain.utils.ConstantsIds;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -23,6 +24,15 @@ import butterknife.OnClick;
  */
 
 public class ChangeLevelBottomSheetFragment extends BottomSheetDialogFragment {
+
+    @BindView(R.id.level_easy)
+    RadioButton easyButton;
+
+    @BindView(R.id.level_medium)
+    RadioButton mediumButton;
+
+    @BindView(R.id.level_hard)
+    RadioButton hardButton;
 
     private int levelId;
     private OnChangeLevelCallback callback;
@@ -43,8 +53,23 @@ public class ChangeLevelBottomSheetFragment extends BottomSheetDialogFragment {
 
         levelId = getArguments().getInt(ConstantsIds.LEVEL_ID);
         Level level = Level.parse(levelId);
+        selectDefaultValue(level);
 
         return view;
+    }
+
+    private void selectDefaultValue(Level level) {
+        switch (level.getId()) {
+            case 1:
+                easyButton.setChecked(true);
+                break;
+            case 2:
+                mediumButton.setChecked(true);
+                break;
+            case 3:
+                hardButton.setChecked(true);
+                break;
+        }
     }
 
     private void onClick(RadioButton box) {

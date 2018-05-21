@@ -1,5 +1,6 @@
 package com.leaflet.gameapp.domain.utils;
 
+import com.leaflet.gameapp.domain.communicator.ImageViewHandler;
 import com.leaflet.gameapp.domain.communicator.ResourceHandler;
 import com.leaflet.gameapp.domain.models.Level;
 import com.leaflet.gameapp.domain.models.Node;
@@ -23,7 +24,7 @@ public class GeneratorManager {
         this.random = new Random();
     }
 
-    public Node[][] generate(Level level) {
+    public Node[][] generate(Level level, ImageViewHandler imageHandler) {
         Node[][] nodes = new Node[level.getRows()][level.getColumns()];
         this.rows = level.getRows();
         this.columns = level.getColumns();
@@ -40,7 +41,7 @@ public class GeneratorManager {
             selected.clear();
             for (short j = 0; j < columns; j++) {
                 index = selectRandomIndex(singleColumns, selected);
-                nodes[singleRows.get(i)][index] = new Node(singleRows.get(i), index, handler.getDrawable((value % maximumValue) + 1), null);
+                nodes[singleRows.get(i)][index] = new Node(singleRows.get(i), index, handler.getDrawable((value % maximumValue) + 1), imageHandler.getImageView(singleRows.get(i) + 1, index + 1));
                 value++;
             }
         }

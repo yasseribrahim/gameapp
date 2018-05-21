@@ -6,4 +6,5 @@ package com.leaflet.gameapp.domain.communicator;
 
 public interface CountDownTimerCallback {
     void onTickCallback();
+    void onFinish();
 }

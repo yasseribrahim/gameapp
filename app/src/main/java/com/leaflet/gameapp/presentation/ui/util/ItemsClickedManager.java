@@ -8,7 +8,8 @@ import android.widget.ImageView;
 
 import com.leaflet.gameapp.R;
 import com.leaflet.gameapp.domain.communicator.Clickable;
-import com.leaflet.gameapp.domain.communicator.OnScoreChange;
+import com.leaflet.gameapp.domain.communicator.ImageViewHandler;
+import com.leaflet.gameapp.domain.communicator.OnScoreChanged;
 import com.leaflet.gameapp.domain.models.Level;
 import com.leaflet.gameapp.domain.models.Node;
 
@@ -22,48 +23,56 @@ public class ItemsClickedManager implements Clickable {
     private Node previousNode;
     private Level level;
     private final Handler handler;
+    private Runnable runnable;
     private final int defaultResource;
-    private OnScoreChange onScoreChange;
+    private OnScoreChanged onScoreChanged;
+    private ImageViewHandler imageHandler;
     private boolean isClicksAvailable;
 
-    public ItemsClickedManager(Context context, Level level, OnScoreChange onScoreChange) {
+    public ItemsClickedManager(Context context, Level level, OnScoreChanged onScoreChanged, ImageViewHandler imageHandler) {
         this.context = context;
-        setLevel(level);
         this.previousNode = new Node();
         this.defaultResource = R.drawable.ic_question_mark;
         this.handler = new Handler();
-        this.onScoreChange = onScoreChange;
+        this.onScoreChanged = onScoreChanged;
+        this.imageHandler = imageHandler;
+        setLevel(level);
         isClicksAvailable = true;
     }
 
     public final void setLevel(Level level) {
         this.level = level;
-        this.nodes = Initializer.getCurrentInitializer().generate(level);
+        this.nodes = Initializer.getCurrentInitializer().generate(level, imageHandler);
     }
 
     public Level getLevel() {
         return level;
     }
 
+    public void onDestroy() {
+        if (runnable != null) {
+            handler.removeCallbacks(runnable);
+        }
+    }
+
     @Override
-    public void onClick(ImageView image, int row, int column) {
+    public void onClick(int row, int column) {
         final Node node = nodes[row - 1][column - 1];
-        node.setImage(image);
 
         if (!node.isVisible() && isClicksAvailable) {
             changeView(node, false);
 
             if (previousNode.isCleared()) {
                 previousNode.fill(node);
-                previousNode.setImage(image);
                 isClicksAvailable = true;
             } else if (previousNode.equals(node)) {
-                onScoreChange.onScoreChange();
+                onScoreChanged.onScoreChange();
                 previousNode.clear();
                 isClicksAvailable = true;
             } else {
                 isClicksAvailable = false;
-                handler.postDelayed(new Runnable() {
+                onDestroy();
+                runnable = new Runnable() {
                     @Override
                     public void run() {
                         changeView(nodes[previousNode.getRow()][previousNode.getColumn()], true);
@@ -71,7 +80,26 @@ public class ItemsClickedManager implements Clickable {
                         previousNode.clear();
                         isClicksAvailable = true;
                     }
-                }, 1000);
+                };
+                handler.postDelayed(runnable, 1000);
+            }
+        }
+    }
+
+    public void showHint(int column) {
+        for (int row = 1; row <= nodes.length; row ++) {
+            final Node node = nodes[row - 1][column - 1];
+            if (!nodes[row - 1][column - 1].isVisible()) {
+                changeView(node, false);
+                handler.postDelayed(new Runnable() {
+                    private int row = node.getRow();
+                    private int column = node.getColumn();
+
+                    @Override
+                    public void run() {
+                        changeView(nodes[row][column], true);
+                    }
+                }, 5000);
             }
         }
     }

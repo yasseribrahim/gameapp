@@ -1,6 +1,7 @@
 package com.leaflet.gameapp.presentation.ui.util;
 
 import com.leaflet.gameapp.R;
+import com.leaflet.gameapp.domain.communicator.ImageViewHandler;
 import com.leaflet.gameapp.domain.communicator.ResourceHandler;
 import com.leaflet.gameapp.domain.models.Level;
 import com.leaflet.gameapp.domain.models.Node;
@@ -22,8 +23,8 @@ public class Initializer implements ResourceHandler {
         return INITIALIZER;
     }
 
-    public Node[][] generate(Level level) {
-        return manager.generate(level);
+    public Node[][] generate(Level level, ImageViewHandler imageHandler) {
+        return manager.generate(level, imageHandler);
     }
 
     @Override
