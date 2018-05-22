@@ -5,6 +5,6 @@ package com.leaflet.gameapp.domain.utils;
  */
 
 public interface ConstantsValues {
-    int HINT_TIME = 5000;
-    int HINT_TIME_DISPLAY = 5000;
+    int HINT_TIME = 60000;
+    int HINT_TIME_DISPLAY = 3000;
 }

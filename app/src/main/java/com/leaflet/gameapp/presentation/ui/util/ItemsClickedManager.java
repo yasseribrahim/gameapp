@@ -12,6 +12,9 @@ import com.leaflet.gameapp.domain.communicator.ImageViewHandler;
 import com.leaflet.gameapp.domain.communicator.OnScoreChanged;
 import com.leaflet.gameapp.domain.models.Level;
 import com.leaflet.gameapp.domain.models.Node;
+import com.leaflet.gameapp.domain.utils.ConstantsValues;
+
+import java.util.Random;
 
 /**
  * Created by yasser.ibrahim on 5/8/2018.
@@ -28,6 +31,7 @@ public class ItemsClickedManager implements Clickable {
     private OnScoreChanged onScoreChanged;
     private ImageViewHandler imageHandler;
     private boolean isClicksAvailable;
+    private boolean isColumnSelected;
 
     public ItemsClickedManager(Context context, Level level, OnScoreChanged onScoreChanged, ImageViewHandler imageHandler) {
         this.context = context;
@@ -38,6 +42,7 @@ public class ItemsClickedManager implements Clickable {
         this.imageHandler = imageHandler;
         setLevel(level);
         isClicksAvailable = true;
+        isColumnSelected = false;
     }
 
     public final void setLevel(Level level) {
@@ -87,7 +92,7 @@ public class ItemsClickedManager implements Clickable {
     }
 
     public void showHint(int column) {
-        for (int row = 1; row <= nodes.length; row ++) {
+        for (int row = 1; row <= nodes.length; row++) {
             final Node node = nodes[row - 1][column - 1];
             if (!nodes[row - 1][column - 1].isVisible()) {
                 changeView(node, false);
@@ -99,9 +104,27 @@ public class ItemsClickedManager implements Clickable {
                     public void run() {
                         changeView(nodes[row][column], true);
                     }
-                }, 5000);
+                }, ConstantsValues.HINT_TIME_DISPLAY);
             }
         }
+    }
+
+    private Node[] selectRandomNodes() {
+        Node[] nodes = null;
+        Random random = new Random();
+        int index;
+        if (isColumnSelected) {
+            index = random.nextInt(level.getColumns());
+            nodes = new Node[level.getColumns()];
+            for (int row = 0; row < nodes.length; row++) {
+//                node = this.nodes[row - 1][index];
+            }
+        } else {
+            index = random.nextInt(level.getRows());
+            nodes = this.nodes[index];
+        }
+        isColumnSelected = !isColumnSelected;
+        return nodes;
     }
 
     private void changeView(Node node, boolean isCleared) {

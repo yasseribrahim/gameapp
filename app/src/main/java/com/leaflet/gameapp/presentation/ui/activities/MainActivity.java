@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -48,6 +49,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private MenuItem currentLevel;
     private int score;
     private OnShowHint onShowHint;
+    private Handler handler;
+    private Runnable runnable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +62,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         level = Level.LEVEL_MEDIUM;
 
         score = 0;
+
+        handler = new Handler();
 
         timer = new CustomCountDownTimer(2 * 60 * 1000, 1000, new CountDownTimerCallback() {
             @Override
@@ -104,7 +109,14 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     protected void onDestroy() {
         timer.cancel();
         hintTimer.cancel();
+        destroyHandler();
         super.onDestroy();
+    }
+
+    private void destroyHandler() {
+        if (runnable != null) {
+            handler.removeCallbacks(runnable);
+        }
     }
 
     @Override
@@ -163,7 +175,15 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             @Override
             public void onFinish() {
                 onShowHint.onShowHint();
-                resetHintTimer();
+
+                destroyHandler();
+                runnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        resetHintTimer();
+                    }
+                };
+                handler.postDelayed(runnable, ConstantsValues.HINT_TIME_DISPLAY);
             }
         });
         hintTimer.start();
