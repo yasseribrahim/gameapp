@@ -91,18 +91,18 @@ public class ItemsClickedManager implements Clickable {
         }
     }
 
-    public void showHint(int column) {
-        for (int row = 1; row <= nodes.length; row++) {
-            final Node node = nodes[row - 1][column - 1];
-            if (!nodes[row - 1][column - 1].isVisible()) {
+    public void showHint() {
+        Node[] nodes = selectRandomNodes();
+        for (int i = 0; i < nodes.length; i++) {
+            final Node node = nodes[i];
+            if (!nodes[i].isVisible()) {
                 changeView(node, false);
                 handler.postDelayed(new Runnable() {
-                    private int row = node.getRow();
-                    private int column = node.getColumn();
+                    Node currentNode = node;
 
                     @Override
                     public void run() {
-                        changeView(nodes[row][column], true);
+                        changeView(currentNode, true);
                     }
                 }, ConstantsValues.HINT_TIME_DISPLAY);
             }
@@ -115,9 +115,9 @@ public class ItemsClickedManager implements Clickable {
         int index;
         if (isColumnSelected) {
             index = random.nextInt(level.getColumns());
-            nodes = new Node[level.getColumns()];
+            nodes = new Node[level.getRows()];
             for (int row = 0; row < nodes.length; row++) {
-//                node = this.nodes[row - 1][index];
+                nodes[row] = this.nodes[row][index];
             }
         } else {
             index = random.nextInt(level.getRows());

@@ -100,7 +100,7 @@ public class PlayFragment extends Fragment implements OnScoreChanged, ImageViewH
 
     @Override
     public void onShowHint() {
-        manager.showHint(2);
+        manager.showHint();
     }
 
     @Override
